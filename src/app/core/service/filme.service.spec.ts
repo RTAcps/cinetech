@@ -30,6 +30,7 @@ describe('FilmeService', () => {
   });
 
   it('deve retornar um filme', () => {
+    // Arrange
     const filmeEsperado = {
       Title: 'The Shawshank Redemption',
       Year: '1994',
@@ -71,16 +72,15 @@ describe('FilmeService', () => {
       Website: 'https://www.shawshankredemption.com/',
       Response: 'True',
     };
-
+    // Act
     service.getFilme().subscribe((filme) => {
       expect(filme).toEqual(filmeEsperado);
     });
-
+    // Assert
     const req = httpMock.expectOne(
       'https://www.omdbapi.com/?i=tt3896198&apikey=4eedd1ff'
     );
     expect(req.request.method).toBe('GET');
-
     req.flush(filmeEsperado);
   });
 });

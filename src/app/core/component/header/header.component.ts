@@ -1,11 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { FilmeService } from '../../service/filme.service';
+import { NgOptimizedImage } from '@angular/common';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [NgOptimizedImage],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {}
+export class HeaderComponent implements OnInit {
+  public isMobileView!: boolean;
+
+  ngOnInit(): void {
+    this.isMobileView = window.innerWidth <= 768;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  public onResize(_event: any) {
+    this.isMobileView = window.innerWidth <= 768;
+  }
+}
