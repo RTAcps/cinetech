@@ -1,8 +1,13 @@
 <main (window:resize)="onResize(isMobileView)">
   <nav>
     <a href="/">
-      <img ngSrc="./assets/images/cinetech_logo.png" alt="Logo da página contendo o nome CineTech" width="300"
-        height="134" priority>
+      @if (!isMobileView) {
+      <img ngSrc="./assets/images/cinetech_logo_hd.svg" alt="Logo da página contendo o nome CineTech" width="313"
+        height="152" priority>
+      } @else {
+      <img ngSrc="./assets/images/cinetech_logo_mobile_hd.svg" alt="Logo da página contendo o nome CineTech" width="313"
+        height="152" priority>
+      }
     </a>
   </nav>
 </main>
