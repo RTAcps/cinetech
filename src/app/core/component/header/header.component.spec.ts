@@ -8,10 +8,9 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent]
-    })
-    .compileComponents();
-    
+      imports: [HeaderComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -19,5 +18,24 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set isMobileView to true if window.innerWidth <= 768', () => {
+    // Arrange
+    spyOnProperty(window, 'innerWidth', 'get').and.returnValue(768);
+    const mockEvent = { target: { innerWidth: 768 } };
+    // Act
+    component.onResize(mockEvent);
+    // Assert
+    expect(component.isMobileView).toBeTruthy();
+  });
+
+  it('should set isMobileView to false if window.innerWidth > 768', () => {
+    // Arrange
+    const mockEvent = { target: { innerWidth: 769 } };
+    // Act
+    component.onResize(mockEvent);
+    // Assert
+    expect(component.isMobileView).toBeFalsy();
   });
 });
