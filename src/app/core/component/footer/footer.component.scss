@@ -1,5 +1,6 @@
 main {
   background-color: #8d8d8d;
+  padding-bottom: 1rem;
 
   nav {
     display: flex;
@@ -34,6 +35,8 @@ main {
 
 @media (min-width: 769px) {
   main {
+    padding-bottom: 0;
+
     nav {
       display: flex;
       flex-direction: row;
