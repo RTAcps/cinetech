@@ -8,6 +8,11 @@ main {
     justify-content: space-evenly;
     align-items: center;
 
+    .img {
+      width: 200px;
+      height: 200px;
+    }
+
     .development {
       display: flex;
       flex-direction: column;
@@ -35,11 +40,17 @@ main {
 
 @media (min-width: 769px) {
   main {
-    padding-bottom: 0;
+    padding: 2.5rem 0 0;
+    height: 10rem;
 
     nav {
       display: flex;
       flex-direction: row;
+
+      .img {
+        width: 161.5px;
+        height: 76px;
+      }
     }
   }
 }
