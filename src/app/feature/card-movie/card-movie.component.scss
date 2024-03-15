@@ -1,0 +1,56 @@
+main {
+  margin: 2.5rem;
+
+  display: flex;
+  justify-content: space-around;
+  gap: 3.5rem;
+
+  .info {
+    h2 {
+      font-weight: 700;
+    }
+
+    .description {
+      margin: 1.5rem 0;
+    }
+
+    .actor {
+      margin: 0;
+    }
+
+    .rating {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+
+      height: 50px;
+
+      p {
+        font-weight: 500;
+        margin: 2rem 0;
+      }
+
+      ngb-rating {
+        font-size: 0;
+      }
+    }
+
+    .btn {
+      width: 10rem;
+
+      svg {
+        color: #ffffff;
+      }
+    }
+  }
+
+  .poster {
+    img {
+      border-radius: 1rem;
+      -webkit-box-shadow: 14px 22px 30px 15px rgba(80, 85, 90, 0.39);
+      -moz-box-shadow: 14px 22px 30px 15px rgba(80, 85, 90, 0.39);
+      box-shadow: 14px 22px 30px 15px rgba(80, 85, 90, 0.39);
+    }
+  }
+}
