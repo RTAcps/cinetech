@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, afterNextRender } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -8,11 +8,13 @@ import { Component, HostListener, OnInit } from '@angular/core';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
   public isMobileView!: boolean;
 
-  ngOnInit(): void {
-    this.isMobileView = window.innerWidth <= 768;
+  constructor() {
+    afterNextRender(() => {
+      this.isMobileView = window.innerWidth <= 768;
+    });
   }
 
   @HostListener('window:resize', ['$event'])

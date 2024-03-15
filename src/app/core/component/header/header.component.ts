@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, afterNextRender } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +8,13 @@ import { Component, HostListener, OnInit } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   public isMobileView!: boolean;
 
-  ngOnInit(): void {
-    this.isMobileView = window.innerWidth <= 768;
+  constructor() {
+    afterNextRender(() => {
+      this.isMobileView = window.innerWidth <= 768;
+    });
   }
 
   @HostListener('window:resize', ['$event'])
