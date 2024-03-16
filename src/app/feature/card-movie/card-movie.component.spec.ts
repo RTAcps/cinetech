@@ -22,13 +22,17 @@ describe('CardMovieComponent', () => {
 
   describe('ariaValueText', () => {
     it('should return correct aria value text', () => {
+      // Arrange
+      // Act
       const result = component.ariaValueText(3, 5);
+      // Assert
       expect(result).toEqual('3 out of 5 stars');
     });
   });
 
   describe('getInfo', () => {
     it('should set properties correctly when movie is provided', () => {
+      // Arrange
       const movie = {
         Title: 'Inception',
         Year: '2010',
@@ -37,9 +41,9 @@ describe('CardMovieComponent', () => {
         Poster: 'http://example.com/poster.jpg',
         imdbRating: '8.8',
       };
-
+      // Act
       component.getInfo(movie);
-
+      // Assert
       expect(component.title).toEqual('Inception');
       expect(component.year).toEqual('2010');
       expect(component.actors).toEqual(
@@ -53,10 +57,11 @@ describe('CardMovieComponent', () => {
     });
 
     it('should set properties to undefined when movie is not provided', () => {
+      // Arrange
       const movie = undefined;
-
+      // Act
       component.getInfo(movie);
-
+      // Assert
       expect(component.title).toBeUndefined();
       expect(component.year).toBeUndefined();
       expect(component.actors).toBeUndefined();

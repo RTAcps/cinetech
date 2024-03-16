@@ -1,4 +1,4 @@
-import { NgOptimizedImage, PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
+import { PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { Movie } from '../../shared/models/movie';
