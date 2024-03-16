@@ -31,7 +31,7 @@ export class CardMovieComponent implements OnInit {
     setTimeout(() => {
       this.getInfo(this.movieData);
       this.loading = false;
-    }, 5000);
+    }, 3000);
   }
 
   public ariaValueText(current: number, max: number) {

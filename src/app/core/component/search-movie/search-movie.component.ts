@@ -93,5 +93,7 @@ export class SearchMovieComponent {
 
   public reset(): void {
     this.searchQuery = '';
+    this.movies = [];
+    this.searchResult.emit(this.movies);
   }
 }
