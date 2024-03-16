@@ -1,20 +1,29 @@
 <app-header></app-header>
 
 <main>
-  <h1>{{ title }}</h1>
-  <p><strong>{{ title }}</strong>
-    é o seu portal para o mundo do cinema.
-  </p>
-  <p> Aqui, você pode pesquisar por filmes de qualquer gênero, ano ou
-    país, e encontrar informações detalhadas sobre cada um deles.
-  </p>
-  <p>
-    <strong>{{ title }}</strong> é o seu guia definitivo para o mundo do cinema.
-  <p>
-    Comece a explorar hoje mesmo!
-  </p>
-</main>
+  <section class="introduction">
+    <h1>{{ title }}</h1>
+    <p><strong>{{ title }}</strong>
+      é o seu portal para o mundo do cinema.
+    </p>
+    <p> Aqui, você pode pesquisar por filmes de qualquer gênero, ano ou
+      país, e encontrar informações detalhadas sobre cada um deles.
+    </p>
+    <p>
+      <strong>{{ title }}</strong> é o seu guia definitivo para o mundo do cinema.
+    <p>
+      Comece a explorar hoje mesmo!
+    </p>
+  </section>
 
-<app-card-movie></app-card-movie>
+  <app-search-movie (searchResult)="updateMovies($event)"></app-search-movie>
+
+  @if (movieDetails) {
+  <app-card-movie [movieData]="movieDetails"></app-card-movie>
+  } @else {
+  ERRO
+  }
+
+</main>
 
 <app-footer></app-footer>
