@@ -1,0 +1,7 @@
+<section class="input-group mb-3">
+  <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="">
+  <div class="input-group-append">
+    <button class="btn btn-secondary" type="button" (click)="buscarFilme(movies)">Search</button>
+    <button class="btn btn-secondary" type="button" (click)="reset()">Reset</button>
+  </div>
+</section>

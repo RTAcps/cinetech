@@ -1,0 +1,23 @@
+.input-group {
+  gap: 3rem;
+
+  .form-control {
+    width: 20rem;
+    border: 2px solid #000000;
+    border-radius: 0;
+
+    &:focus {
+      border: 2px solid #004EB3;
+    }
+  }
+
+  .input-group-append {
+    display: flex;
+
+    gap: 3rem;
+
+    .btn {
+      width: 10rem;
+    }
+  }
+}
