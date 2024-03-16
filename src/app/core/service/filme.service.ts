@@ -6,11 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class FilmeService {
+  private apiUrl: string = 'https://www.omdbapi.com/?i=tt3896198';
+  private apiKey: string = '4eedd1ff';
+
   constructor(private http: HttpClient) {}
 
-  public getFilme(): Observable<Object> {
-    return this.http.get(
-      'https://www.omdbapi.com/?i=tt3896198&apikey=4eedd1ff'
-    );
+  public getFilme(): Observable<any> {
+    const url = `${this.apiUrl}&apikey=${this.apiKey}`;
+
+    return this.http.get(url);
   }
 }
