@@ -31,6 +31,9 @@ describe('FilmeService', () => {
 
   it('deve retornar um filme', () => {
     // Arrange
+    const apiUrl = 'https://www.omdbapi.com/?i=tt3896198';
+    const apiKey = '4eedd1ff';
+    const query = 'The Shawshank';
     const filmeEsperado = {
       Title: 'The Shawshank Redemption',
       Year: '1994',
@@ -73,12 +76,12 @@ describe('FilmeService', () => {
       Response: 'True',
     };
     // Act
-    service.getFilme().subscribe((filme) => {
+    service.getFilme(query).subscribe((filme) => {
       expect(filme).toEqual(filmeEsperado);
     });
     // Assert
     const req = httpMock.expectOne(
-      'https://www.omdbapi.com/?i=tt3896198&apikey=4eedd1ff'
+      `${apiUrl}&apikey=${apiKey}&t=${encodeURIComponent(query)}&plot=full`
     );
     expect(req.request.method).toBe('GET');
     req.flush(filmeEsperado);
