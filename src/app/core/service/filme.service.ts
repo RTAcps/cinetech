@@ -11,8 +11,10 @@ export class FilmeService {
 
   constructor(private http: HttpClient) {}
 
-  public getFilme(): Observable<any> {
-    const url = `${this.apiUrl}&apikey=${this.apiKey}`;
+  public getFilme(query: string): Observable<any> {
+    const url = `${this.apiUrl}&apikey=${this.apiKey}&t=${encodeURIComponent(
+      query
+    )}&plot=full`;
 
     return this.http.get(url);
   }
