@@ -18,10 +18,21 @@
 
   <app-search-movie (searchResult)="updateMovies($event)"></app-search-movie>
 
-  @if (movieDetails) {
-  <app-card-movie [movieData]="movieDetails"></app-card-movie>
+  @if (!movieDetails || movieDetails.length === 0) {
+  <ngb-carousel #carousel [interval]="6000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus"
+    (slide)="onSlide($event)">
+    @for (movie of moviesPosters; track movie; let i = $index) {
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img [ngSrc]="movie.imgSrc" [alt]="movie.imgAlt" [width]="movie.width" [height]="movie.height" priority />
+      </div>
+    </ng-template>
+    }
+  </ngb-carousel>
   } @else {
-  ERRO
+  <ng-container>
+    <app-card-movie [movieData]="movieDetails"></app-card-movie>
+  </ng-container>
   }
 
 </main>
