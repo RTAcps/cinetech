@@ -5,6 +5,11 @@ main {
   justify-content: space-around;
   gap: 3.5rem;
 
+  .spinner-border {
+    width: 8rem;
+    height: 8rem;
+  }
+
   .info {
     h2 {
       font-weight: 700;

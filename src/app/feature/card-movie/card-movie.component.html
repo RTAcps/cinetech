@@ -1,4 +1,9 @@
 <main>
+  @if(loading) {
+  <div class="spinner-border text-secondary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  } @else {
   <section class="info">
     <h2>{{ title }}</h2>
 
@@ -42,4 +47,5 @@
   <section class="poster">
     <img [src]="poster" alt="poster do filme">
   </section>
+  }
 </main>

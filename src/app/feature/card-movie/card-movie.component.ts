@@ -25,9 +25,13 @@ export class CardMovieComponent implements OnInit {
   public plot!: string;
   public poster!: string;
   public rating!: number;
+  public loading: boolean = true;
 
   ngOnInit(): void {
-    this.getInfo(this.movieData);
+    setTimeout(() => {
+      this.getInfo(this.movieData);
+      this.loading = false;
+    }, 5000);
   }
 
   public ariaValueText(current: number, max: number) {
