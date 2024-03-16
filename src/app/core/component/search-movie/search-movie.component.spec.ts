@@ -117,7 +117,7 @@ describe('SearchMovieComponent', () => {
     });
   });
 
-  describe('reset', () => {
+  describe('#reset', () => {
     it('should reset searchQuery', () => {
       component.searchQuery = 'some query';
       component.reset();

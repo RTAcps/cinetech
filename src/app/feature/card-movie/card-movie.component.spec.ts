@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 
 import { CardMovieComponent } from './card-movie.component';
 
@@ -69,5 +74,18 @@ describe('CardMovieComponent', () => {
       expect(component.poster).toBeUndefined();
       expect(component.rating).toBeNaN();
     });
+  });
+
+  describe('#OnInit', () => {
+    it('should call getInfo and set loading to false after 3 seconds', fakeAsync(() => {
+      // Arrange
+      spyOn(component, 'getInfo');
+      // Act
+      component.ngOnInit();
+      tick(3000);
+      // Assert
+      expect(component.getInfo).toHaveBeenCalledWith(component.movieData);
+      expect(component.loading).toBeFalse();
+    }));
   });
 });
