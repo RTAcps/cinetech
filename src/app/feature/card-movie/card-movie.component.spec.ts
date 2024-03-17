@@ -9,11 +9,13 @@ import {
 import { CardMovieComponent } from './card-movie.component';
 import { FilmeService } from '../../core/service/filme.service';
 import { of, throwError } from 'rxjs';
+import { FavoriteService } from '../../core/service/favorite.service';
 
 describe('CardMovieComponent', () => {
   let component: CardMovieComponent;
   let fixture: ComponentFixture<CardMovieComponent>;
   let movieService: jasmine.SpyObj<FilmeService>;
+  let mockFavoriteService: FavoriteService;
   const movie = {
     Title: 'Inception',
     Year: '2010',
@@ -25,13 +27,18 @@ describe('CardMovieComponent', () => {
 
   beforeEach(async () => {
     movieService = jasmine.createSpyObj('FilmeService', ['getFilm']);
+
     await TestBed.configureTestingModule({
       imports: [CardMovieComponent],
-      providers: [{ provide: FilmeService, useValue: movieService }],
+      providers: [
+        { provide: FilmeService, useValue: movieService },
+        FavoriteService,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CardMovieComponent);
     component = fixture.componentInstance;
+    mockFavoriteService = TestBed.inject(FavoriteService);
     fixture.detectChanges();
   });
 
@@ -39,7 +46,7 @@ describe('CardMovieComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('ariaValueText', () => {
+  describe('#ariaValueText', () => {
     it('should return correct aria value text', () => {
       // Arrange
       // Act
@@ -146,6 +153,17 @@ describe('CardMovieComponent', () => {
       component.showFilmInitial();
       // Assert
       expect(component.errorNumber).toEqual(errorResponse.status);
+    });
+  });
+
+  describe('#favorite', () => {
+    it('should be call toggle favorite', () => {
+      // Arrange
+      spyOn(mockFavoriteService, 'toggleFavorite');
+      // Act
+      component.favorite();
+      // Assert
+      expect(mockFavoriteService.toggleFavorite).toHaveBeenCalled();
     });
   });
 });
