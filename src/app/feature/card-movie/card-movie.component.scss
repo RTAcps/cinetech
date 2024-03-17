@@ -44,8 +44,8 @@ main {
     .btn {
       width: 10rem;
 
-      svg {
-        color: #ffffff;
+      &:active {
+        transform: scale(0.92);
       }
     }
   }

@@ -1,9 +1,10 @@
 import { PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { Movie } from '../../shared/models/movie';
 import { FilmeService } from '../../core/service/filme.service';
 import Swal from 'sweetalert2';
+import { FavoriteService } from '../../core/service/favorite.service';
 
 @Component({
   selector: 'app-card-movie',
@@ -23,6 +24,7 @@ export class CardMovieComponent implements OnInit {
   @Input() movieInitial!: Movie[];
   @Input() loading: boolean = true;
   @Input() initial!: boolean;
+  @ViewChild('heartIcon') heartIcon!: ElementRef;
 
   public title!: string;
   public year!: string;
@@ -32,10 +34,18 @@ export class CardMovieComponent implements OnInit {
   public rating!: number;
   public errorNumber!: number;
   public errorText!: string;
+  public isFavorite = false;
 
-  constructor(private movieService: FilmeService) {}
+  constructor(
+    private movieService: FilmeService,
+    private favoriteService: FavoriteService
+  ) {}
 
   ngOnInit(): void {
+    this.favoriteService.isFavorite$.subscribe((isFavorite) => {
+      this.isFavorite = isFavorite;
+    });
+
     if (this.initial) {
       this.showFilmInitial();
     } else {
@@ -107,5 +117,9 @@ export class CardMovieComponent implements OnInit {
         }
       },
     });
+  }
+
+  public favorite() {
+    this.favoriteService.toggleFavorite();
   }
 }
