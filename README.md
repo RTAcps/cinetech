@@ -2,6 +2,8 @@
 
 Front-end Test Developer: pesquisa sobre um título de filme pesquisado.
 
+Esta aplicação foi realizado o deploy e se encontra hospedado em [CineTechMovie](https://cinetechmovie.netlify.app).
+
 Esse projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 17.2.3.
 
 ## Clonar repositório
