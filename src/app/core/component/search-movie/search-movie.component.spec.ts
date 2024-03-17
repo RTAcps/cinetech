@@ -16,7 +16,6 @@ describe('SearchMovieComponent', () => {
   let component: SearchMovieComponent;
   let fixture: ComponentFixture<SearchMovieComponent>;
   let movieService: jasmine.SpyObj<FilmeService>;
-  let SwalMixinSpy: jasmine.SpyObj<{ fire: (arg: any) => void }>;
 
   const movie = {
     Title: 'Movie 1',
@@ -40,14 +39,10 @@ describe('SearchMovieComponent', () => {
 
   beforeEach(async () => {
     movieService = jasmine.createSpyObj('FilmeService', ['getMovies']);
-    SwalMixinSpy = jasmine.createSpyObj('SwalMixinSpy', ['fire']);
 
     await TestBed.configureTestingModule({
       imports: [SearchMovieComponent, FormsModule],
-      providers: [
-        { provide: FilmeService, useValue: movieService },
-        { provide: Swal, useValue: { mixin: () => SwalMixinSpy } },
-      ],
+      providers: [{ provide: FilmeService, useValue: movieService }],
     }).compileComponents();
   });
 

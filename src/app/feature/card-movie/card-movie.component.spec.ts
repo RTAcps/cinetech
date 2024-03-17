@@ -2,18 +2,32 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
+  flush,
   tick,
 } from '@angular/core/testing';
 
 import { CardMovieComponent } from './card-movie.component';
+import { FilmeService } from '../../core/service/filme.service';
+import { of, throwError } from 'rxjs';
 
 describe('CardMovieComponent', () => {
   let component: CardMovieComponent;
   let fixture: ComponentFixture<CardMovieComponent>;
+  let movieService: jasmine.SpyObj<FilmeService>;
+  const movie = {
+    Title: 'Inception',
+    Year: '2010',
+    Actors: 'Leonardo DiCaprio, Joseph Gordon-Levitt',
+    Plot: 'A thief who enters the dreams of others to steal secrets from their subconscious.',
+    Poster: 'http://example.com/poster.jpg',
+    imdbRating: '8.8',
+  };
 
   beforeEach(async () => {
+    movieService = jasmine.createSpyObj('FilmeService', ['getFilm']);
     await TestBed.configureTestingModule({
       imports: [CardMovieComponent],
+      providers: [{ provide: FilmeService, useValue: movieService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CardMovieComponent);
@@ -38,14 +52,6 @@ describe('CardMovieComponent', () => {
   describe('getInfo', () => {
     it('should set properties correctly when movie is provided', () => {
       // Arrange
-      const movie = {
-        Title: 'Inception',
-        Year: '2010',
-        Actors: 'Leonardo DiCaprio, Joseph Gordon-Levitt',
-        Plot: 'A thief who enters the dreams of others to steal secrets from their subconscious.',
-        Poster: 'http://example.com/poster.jpg',
-        imdbRating: '8.8',
-      };
       // Act
       component.getInfo(movie);
       // Assert
@@ -87,5 +93,59 @@ describe('CardMovieComponent', () => {
       expect(component.getInfo).toHaveBeenCalledWith(component.movieData);
       expect(component.loading).toBeFalse();
     }));
+  });
+
+  describe('#showFilmInitial', () => {
+    it('should call movieService.getMovies with correct query and emit result on success', () => {
+      // Arrange
+      movieService.getFilm.and.returnValue(of(movie));
+      spyOn(component, 'getInfo');
+      // Act
+      component.showFilmInitial();
+      // Assert
+      expect(movieService.getFilm).toHaveBeenCalled();
+      expect(component.initial).toBeTruthy();
+      expect(component.getInfo).toHaveBeenCalledWith(movie);
+    });
+
+    it('should show error toast when request 400', () => {
+      // Arrange
+      const errorResponse = { status: 400 };
+      movieService.getFilm.and.returnValue(throwError(errorResponse));
+      // Act
+      component.showFilmInitial();
+      // Assert
+      expect(component.errorNumber).toEqual(errorResponse.status);
+    });
+
+    it('should show error toast when request 401', () => {
+      // Arrange
+      const errorResponse = { status: 401 };
+      movieService.getFilm.and.returnValue(throwError(errorResponse));
+      // Act
+      component.showFilmInitial();
+      // Assert
+      expect(component.errorNumber).toEqual(errorResponse.status);
+    });
+
+    it('should show error toast when request 404', () => {
+      // Arrange
+      const errorResponse = { status: 404 };
+      movieService.getFilm.and.returnValue(throwError(errorResponse));
+      // Act
+      component.showFilmInitial();
+      // Assert
+      expect(component.errorNumber).toEqual(errorResponse.status);
+    });
+
+    it('should show error toast when request 500', () => {
+      // Arrange
+      const errorResponse = { status: 500 };
+      movieService.getFilm.and.returnValue(throwError(errorResponse));
+      // Act
+      component.showFilmInitial();
+      // Assert
+      expect(component.errorNumber).toEqual(errorResponse.status);
+    });
   });
 });
