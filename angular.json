@@ -44,6 +44,18 @@
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                  },
+                "fonts": true
+              },
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -59,7 +71,17 @@
               "outputHashing": "all"
             },
             "development": {
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                  },
+                "fonts": true
+              },
+              "outputHashing": "all",
+              "namedChunks": false,
+              "aot": true,
               "extractLicenses": false,
               "sourceMap": true
             }
