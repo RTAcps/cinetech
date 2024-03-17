@@ -24,15 +24,38 @@ export class SearchMovieComponent {
 
   public buscarFilme(movie: Movie[]): void {
     if (this.searchQuery.trim() !== '') {
-      this.movieService.getFilme().subscribe({
+      this.movies = [];
+      this.searchResult.emit(this.movies);
+      this.movieService.getFilme(this.searchQuery).subscribe({
         next: (data: any) => {
-          this.movies = data;
-          this.searchResult.emit(this.movies);
+          if (data?.Response === 'False') {
+            this.errorText =
+              'Não foi possível encontrar o filme, verifique se está colocando o título em inglês!';
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: 'error',
+              title:
+                'Não foi possível encontrar o filme, verifique se está colocando o título em inglês!',
+            });
+          } else {
+            this.movies = data;
+            this.searchResult.emit(this.movies);
+          }
         },
         error: (e) => {
           const Toast = Swal.mixin({
             toast: true,
-            position: 'top-end',
+            position: 'bottom',
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true,
@@ -75,7 +98,7 @@ export class SearchMovieComponent {
 
       const Toast = Swal.mixin({
         toast: true,
-        position: 'top-end',
+        position: 'bottom',
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,

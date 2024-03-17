@@ -21,7 +21,7 @@
   @if (!movieDetails || movieDetails.length === 0) {
   <ngb-carousel #carousel [interval]="6000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus"
     (slide)="onSlide($event)">
-    @for (movie of moviesPosters; track movie; let i = $index) {
+    @for (movie of moviesPosters; track movie) {
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">
         <img [ngSrc]="movie.imgSrc" [alt]="movie.imgAlt" [width]="movie.width" [height]="movie.height" priority />

@@ -44,6 +44,6 @@ export class CardMovieComponent implements OnInit {
     this.actors = movie?.Actors;
     this.plot = movie?.Plot;
     this.poster = movie?.Poster;
-    this.rating = Number((movie?.imdbRating * 5) / 10);
+    this.rating = Number(movie?.imdbRating * 5) / 10;
   }
 }
