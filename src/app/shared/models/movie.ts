@@ -27,5 +27,5 @@ export interface Movie {
   BoxOffice?: string;
   Production?: string;
   Website?: string;
-  Responsew?: string;
+  Response?: string;
 }
