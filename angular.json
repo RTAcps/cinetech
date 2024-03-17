@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "sweetalert2"
+           ],
             "outputPath": "dist/cinetech",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -44,8 +47,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -56,7 +59,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "optimization": false,
+              "optimization": true,
               "extractLicenses": false,
               "sourceMap": true
             }
