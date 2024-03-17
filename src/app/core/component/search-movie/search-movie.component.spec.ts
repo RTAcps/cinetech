@@ -2,6 +2,7 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
+  flush,
   tick,
 } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
@@ -17,16 +18,25 @@ describe('SearchMovieComponent', () => {
   let movieService: jasmine.SpyObj<FilmeService>;
   let SwalMixinSpy: jasmine.SpyObj<{ fire: (arg: any) => void }>;
 
-  const movies: Movie[] = [
-    {
-      Title: 'Movie 1',
-      Year: 'test',
-      Actors: 'test',
-      Plot: 'test',
-      Poster: 'test',
-      imdbRating: '7.5',
-    },
-  ];
+  const movie = {
+    Title: 'Movie 1',
+    Year: 'test',
+    Actors: 'test',
+    Plot: 'test',
+    Poster: 'test',
+    imdbRating: '7.5',
+    Response: 'True',
+  };
+
+  const movieError = {
+    Title: '',
+    Year: '',
+    Actors: '',
+    Plot: '',
+    Poster: '',
+    imdbRating: '',
+    Response: 'False',
+  };
 
   beforeEach(async () => {
     movieService = jasmine.createSpyObj('FilmeService', ['getFilme']);
@@ -52,15 +62,43 @@ describe('SearchMovieComponent', () => {
   });
 
   describe('#buscarFilme', () => {
+    it('should call movieService.getFilme with correct query and emit result on success', () => {
+      // Arrange
+      component.searchQuery = 'Movie';
+      movieService.getFilme.and.returnValue(of(movie));
+      // Act
+      component.buscarFilme([movie]);
+      // Assert
+      expect(movieService.getFilme).toHaveBeenCalledWith('Movie');
+    });
+
+    it('should handle response errors and display appropriate message', () => {
+      // Arrange
+      component.searchQuery = 'invalid movie';
+      const errorResponse = { Response: 'False' };
+      spyOn(component.searchResult, 'emit');
+      movieService.getFilme.and.returnValue(of(errorResponse));
+      // Act
+      component.buscarFilme([movie]);
+      // Assert
+      expect(movieService.getFilme).toHaveBeenCalledWith('invalid movie');
+      expect(component.movies).toEqual([]);
+      expect(component.searchResult.emit).toHaveBeenCalledWith([]);
+      expect(component.errorText).toEqual(
+        'Não foi possível encontrar o filme, verifique se está colocando o título em inglês!'
+      );
+    });
+
     it('should emit searchResult with movies when searchQuery is not empty', fakeAsync(() => {
       // Arrange
-      movieService.getFilme.and.returnValue(of(movies));
+      movieService.getFilme.and.returnValue(of(movieError));
       component.searchQuery = 'query';
       // Act
-      component.buscarFilme(movies);
+      component.buscarFilme([movieError]);
       tick();
+      flush();
       // Assert
-      expect(component.movies).toEqual(movies);
+      expect(component.movies).toEqual([]);
     }));
 
     it('should show error toast when request 400', () => {
