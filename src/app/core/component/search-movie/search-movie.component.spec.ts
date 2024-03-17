@@ -39,7 +39,7 @@ describe('SearchMovieComponent', () => {
   };
 
   beforeEach(async () => {
-    movieService = jasmine.createSpyObj('FilmeService', ['getFilme']);
+    movieService = jasmine.createSpyObj('FilmeService', ['getMovies']);
     SwalMixinSpy = jasmine.createSpyObj('SwalMixinSpy', ['fire']);
 
     await TestBed.configureTestingModule({
@@ -62,14 +62,14 @@ describe('SearchMovieComponent', () => {
   });
 
   describe('#buscarFilme', () => {
-    it('should call movieService.getFilme with correct query and emit result on success', () => {
+    it('should call movieService.getMovies with correct query and emit result on success', () => {
       // Arrange
       component.searchQuery = 'Movie';
-      movieService.getFilme.and.returnValue(of(movie));
+      movieService.getMovies.and.returnValue(of(movie));
       // Act
       component.buscarFilme([movie]);
       // Assert
-      expect(movieService.getFilme).toHaveBeenCalledWith('Movie');
+      expect(movieService.getMovies).toHaveBeenCalledWith('Movie');
     });
 
     it('should handle response errors and display appropriate message', () => {
@@ -77,11 +77,11 @@ describe('SearchMovieComponent', () => {
       component.searchQuery = 'invalid movie';
       const errorResponse = { Response: 'False' };
       spyOn(component.searchResult, 'emit');
-      movieService.getFilme.and.returnValue(of(errorResponse));
+      movieService.getMovies.and.returnValue(of(errorResponse));
       // Act
       component.buscarFilme([movie]);
       // Assert
-      expect(movieService.getFilme).toHaveBeenCalledWith('invalid movie');
+      expect(movieService.getMovies).toHaveBeenCalledWith('invalid movie');
       expect(component.movies).toEqual([]);
       expect(component.searchResult.emit).toHaveBeenCalledWith([]);
       expect(component.errorText).toEqual(
@@ -91,7 +91,7 @@ describe('SearchMovieComponent', () => {
 
     it('should emit searchResult with movies when searchQuery is not empty', fakeAsync(() => {
       // Arrange
-      movieService.getFilme.and.returnValue(of(movieError));
+      movieService.getMovies.and.returnValue(of(movieError));
       component.searchQuery = 'query';
       // Act
       component.buscarFilme([movieError]);
@@ -104,7 +104,7 @@ describe('SearchMovieComponent', () => {
     it('should show error toast when request 400', () => {
       // Arrange
       const errorResponse = { status: 400 };
-      movieService.getFilme.and.returnValue(throwError(errorResponse));
+      movieService.getMovies.and.returnValue(throwError(errorResponse));
       component.searchQuery = 'query';
       // Act
       component.buscarFilme([]);
@@ -115,7 +115,7 @@ describe('SearchMovieComponent', () => {
     it('should show error toast when request 401', () => {
       // Arrange
       const errorResponse = { status: 401 };
-      movieService.getFilme.and.returnValue(throwError(errorResponse));
+      movieService.getMovies.and.returnValue(throwError(errorResponse));
       component.searchQuery = 'query';
       // Act
       component.buscarFilme([]);
@@ -126,7 +126,7 @@ describe('SearchMovieComponent', () => {
     it('should show error toast when request 404', () => {
       // Arrange
       const errorResponse = { status: 404 };
-      movieService.getFilme.and.returnValue(throwError(errorResponse));
+      movieService.getMovies.and.returnValue(throwError(errorResponse));
       component.searchQuery = 'query';
       // Act
       component.buscarFilme([]);
@@ -137,7 +137,7 @@ describe('SearchMovieComponent', () => {
     it('should show error toast when request 500', () => {
       // Arrange
       const errorResponse = { status: 500 };
-      movieService.getFilme.and.returnValue(throwError(errorResponse));
+      movieService.getMovies.and.returnValue(throwError(errorResponse));
       component.searchQuery = 'query';
       // Act
       component.buscarFilme([]);

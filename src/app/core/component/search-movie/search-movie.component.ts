@@ -26,7 +26,7 @@ export class SearchMovieComponent {
     if (this.searchQuery.trim() !== '') {
       this.movies = [];
       this.searchResult.emit(this.movies);
-      this.movieService.getFilme(this.searchQuery).subscribe({
+      this.movieService.getMovies(this.searchQuery).subscribe({
         next: (data: any) => {
           if (data?.Response === 'False') {
             this.errorText =
