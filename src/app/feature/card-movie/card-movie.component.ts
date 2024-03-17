@@ -2,6 +2,8 @@ import { PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { Movie } from '../../shared/models/movie';
+import { FilmeService } from '../../core/service/filme.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-card-movie',
@@ -18,6 +20,9 @@ import { Movie } from '../../shared/models/movie';
 })
 export class CardMovieComponent implements OnInit {
   @Input() movieData!: Movie[];
+  @Input() movieInitial!: Movie[];
+  @Input() loading: boolean = true;
+  @Input() initial!: boolean;
 
   public title!: string;
   public year!: string;
@@ -25,13 +30,21 @@ export class CardMovieComponent implements OnInit {
   public plot!: string;
   public poster!: string;
   public rating!: number;
-  public loading: boolean = true;
+  public errorNumber!: number;
+  public errorText!: string;
+
+  constructor(private movieService: FilmeService) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.getInfo(this.movieData);
-      this.loading = false;
-    }, 3000);
+    if (this.initial) {
+      this.showFilmInitial();
+    } else {
+      setTimeout(() => {
+        this.getInfo(this.movieData);
+        this.loading = false;
+        this.initial = false;
+      }, 3000);
+    }
   }
 
   public ariaValueText(current: number, max: number) {
@@ -45,5 +58,54 @@ export class CardMovieComponent implements OnInit {
     this.plot = movie?.Plot;
     this.poster = movie?.Poster;
     this.rating = Number(movie?.imdbRating * 5) / 10;
+  }
+
+  public showFilmInitial(): void {
+    this.movieService.getFilm().subscribe({
+      next: (data: any) => {
+        this.initial = true;
+        this.getInfo(data);
+      },
+      error: (e) => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'bottom',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+
+        if (e.status === 400) {
+          this.errorNumber = e.status;
+
+          Toast.fire({
+            icon: 'error',
+            title: 'Houve um erro inesperado!',
+          });
+        } else if (e.status === 401) {
+          this.errorNumber = e.status;
+          Toast.fire({
+            icon: 'error',
+            title: 'Você não tem autorização para acessar!',
+          });
+        } else if (e.status === 404) {
+          this.errorNumber = e.status;
+          Toast.fire({
+            icon: 'error',
+            title: 'Não foi possível encontrar o filme!',
+          });
+        } else if (e.status === 500) {
+          this.errorNumber = e.status;
+          Toast.fire({
+            icon: 'error',
+            title: 'O servidor apresentou um problema!',
+          });
+        }
+      },
+    });
   }
 }

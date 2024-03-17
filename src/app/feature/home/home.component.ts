@@ -39,6 +39,7 @@ export class HomeComponent {
 
   public title = 'CineTech';
   public movieDetails!: Movie[];
+  public movieInitial!: Movie[];
 
   public paused = false;
   public pauseOnHover = true;
@@ -49,22 +50,22 @@ export class HomeComponent {
       imgSrc:
         'https://proxy.olhardigital.com.br/wp-content/uploads/2024/01/Destaque-Indicados-ao-Oscar-2024.jpg',
       imgAlt: 'Poster com os destaque indicados ao Oscar 2024',
-      width: 954,
-      height: 536,
+      width: 477,
+      height: 268,
     },
     {
       imgSrc:
         'https://www.ofuxico.com.br/img/upload/noticias/2021/03/19/filmes-indicados-ao-oscar-2021-saiba-mais_399119_36.jpg',
       imgAlt: 'Poster com os destaque indicados ao Oscar 2021',
-      width: 845,
-      height: 536,
+      width: 422.5,
+      height: 268,
     },
     {
       imgSrc:
         'https://s2.glbimg.com/Sq3Z_Z2rPi-LDzcKIRjSX3mf5b4=/e.glbimg.com/og/ed/f/original/2021/04/21/design_sem_nome.png',
       imgAlt: 'Poster com os destaque indicados ao Oscar 2019',
-      width: 1116,
-      height: 536,
+      width: 558,
+      height: 268,
     },
   ];
 

@@ -16,22 +16,28 @@
     </p>
   </section>
 
+  <section class="carousel">
+    <ngb-carousel #carousel [interval]="6000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus"
+      (slide)="onSlide($event)">
+      @for (movie of moviesPosters; track movie) {
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [ngSrc]="movie.imgSrc" [alt]="movie.imgAlt" [width]="movie.width" [height]="movie.height" priority />
+        </div>
+      </ng-template>
+      }
+    </ngb-carousel>
+  </section>
+
   <app-search-movie (searchResult)="updateMovies($event)"></app-search-movie>
 
   @if (!movieDetails || movieDetails.length === 0) {
-  <ngb-carousel #carousel [interval]="6000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus"
-    (slide)="onSlide($event)">
-    @for (movie of moviesPosters; track movie) {
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img [ngSrc]="movie.imgSrc" [alt]="movie.imgAlt" [width]="movie.width" [height]="movie.height" priority />
-      </div>
-    </ng-template>
-    }
-  </ngb-carousel>
+  <ng-container>
+    <app-card-movie [movieInitial]="movieInitial" [loading]="false" [initial]="true"></app-card-movie>
+  </ng-container>
   } @else {
   <ng-container>
-    <app-card-movie [movieData]="movieDetails"></app-card-movie>
+    <app-card-movie [movieData]="movieDetails" [initial]="false"></app-card-movie>
   </ng-container>
   }
 
