@@ -2,6 +2,7 @@ main {
   margin: 2.5rem;
 
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   gap: 3.5rem;
 
@@ -57,5 +58,13 @@ main {
       -moz-box-shadow: 14px 22px 30px 15px rgba(80, 85, 90, 0.39);
       box-shadow: 14px 22px 30px 15px rgba(80, 85, 90, 0.39);
     }
+  }
+}
+
+@media (min-width: 769px) {
+  main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }
 }

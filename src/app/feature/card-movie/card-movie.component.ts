@@ -1,5 +1,13 @@
 import { PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+  afterNextRender,
+} from '@angular/core';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { Movie } from '../../shared/models/movie';
 import { FilmeService } from '../../core/service/filme.service';
@@ -35,11 +43,16 @@ export class CardMovieComponent implements OnInit {
   public errorNumber!: number;
   public errorText!: string;
   public isFavorite = false;
+  public isMobileView!: boolean;
 
   constructor(
     private movieService: FilmeService,
     private favoriteService: FavoriteService
-  ) {}
+  ) {
+    afterNextRender(() => {
+      this.isMobileView = window.innerWidth <= 768;
+    });
+  }
 
   ngOnInit(): void {
     this.favoriteService.isFavorite$.subscribe((isFavorite) => {
@@ -121,5 +134,10 @@ export class CardMovieComponent implements OnInit {
 
   public favorite() {
     this.favoriteService.toggleFavorite();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  public onResize(_event: any) {
+    this.isMobileView = window.innerWidth <= 768;
   }
 }
