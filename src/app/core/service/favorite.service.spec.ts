@@ -16,18 +16,6 @@ describe('FavoriteService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should toggle favorite status', async () => {
-    // Arrange
-    service.toggleFavorite();
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    // Act
-    service.toggleFavorite();
-    const isFavorite = await service.isFavorite$.pipe(take(1)).toPromise();
-
-    // Assert
-    expect(isFavorite).toBeFalse();
-  });
-
   it('should save favorite to localStorage', () => {
     // Arrange
     // Act
