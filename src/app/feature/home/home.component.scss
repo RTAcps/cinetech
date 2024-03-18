@@ -5,8 +5,12 @@ main {
   min-height: 95vh;
   padding-bottom: 5rem;
 
+
   .introduction {
     margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     h1 {
       font-family: 'Figtree', sans-serif;
