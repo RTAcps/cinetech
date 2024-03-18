@@ -2,9 +2,10 @@
   gap: 3rem;
 
   .form-control {
-    width: 20rem;
+    width: 15rem;
     border: 2px solid #000000;
     border-radius: 0;
+    margin: 20px;
 
     &:focus {
       border: 2px solid #004EB3;
@@ -13,8 +14,40 @@
 
   .input-group-append {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-inline: 30%;
 
-    gap: 3rem;
+    .btn {
+      width: 5rem;
+      height: 3rem;
+      margin-inline: 25%;
+    }
+  }
+}
+
+@media (min-width: 503px) {
+  .input-group-append {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-inline: 0% !important;
+  }
+
+  .btn {
+    margin-inline: 0% !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .input-group {
+    .form-control {
+      width: 20rem;
+    }
+  }
+
+  .input-group-append {
+    gap: 5rem;
 
     .btn {
       width: 10rem;
