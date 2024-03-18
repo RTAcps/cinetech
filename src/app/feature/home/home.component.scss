@@ -61,3 +61,19 @@ app-footer {
     }
   }
 }
+
+@media (max-width: 768px) {
+  main {
+    .carousel {
+      .picsum-img-wrapper {
+        display: flex;
+        justify-content: center;
+
+        img {
+          width: 80%;
+          height: 80%;
+        }
+      }
+    }
+  }
+}

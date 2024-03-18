@@ -1,5 +1,10 @@
 import { NgOptimizedImage, PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  ViewChild,
+  afterNextRender,
+} from '@angular/core';
 import {
   NgbCarousel,
   NgbCarouselModule,
@@ -45,6 +50,8 @@ export class HomeComponent {
   public pauseOnHover = true;
   public pauseOnFocus = true;
 
+  public isMobileView!: boolean;
+
   public moviesPosters: any[] = [
     {
       imgSrc:
@@ -68,6 +75,12 @@ export class HomeComponent {
       height: 268,
     },
   ];
+
+  constructor() {
+    afterNextRender(() => {
+      this.isMobileView = window.innerWidth <= 768;
+    });
+  }
 
   public updateMovies(movies: Movie[]): void {
     this.movieDetails = movies;
@@ -97,5 +110,10 @@ export class HomeComponent {
     ) {
       this.togglePaused();
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  public onResize(_event: any) {
+    this.isMobileView = window.innerWidth <= 768;
   }
 }
